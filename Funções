@@ -1,0 +1,70 @@
+function getSheetById(id) {
+  return SpreadsheetApp.getActive().getSheets().filter(
+    function(s) {return s.getSheetId() === id;}
+  )[0];
+}
+
+
+function importarEARDaONS() {
+ 
+    // URL de download do arquivo CSV
+    var csvUrl = "https://ons-dl-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2022.csv";
+    var csv = UrlFetchApp.fetch(csvUrl).getContentText();
+    var dados = Utilities.parseCsv(csv);
+
+    var planilha = SpreadsheetApp.openById("1-h77HxpQYiGF7O00ikaDGrmpNn0mQhmZ9yDZUnG8_ao")
+    var aba = getSheetById(217644558)
+    aba.getRange(1, 1, dados.length, dados[0].length).setValues(dados);
+ 
+}
+
+function importarENADaONS() {
+ 
+    // URL de download do arquivo CSV
+    var csvUrl = "https://ons-dl-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2022.csv";
+    var csv = UrlFetchApp.fetch(csvUrl).getContentText();
+    var dados = Utilities.parseCsv(csv);
+
+    var planilha = SpreadsheetApp.openById("1-h77HxpQYiGF7O00ikaDGrmpNn0mQhmZ9yDZUnG8_ao")
+    var aba = getSheetById(1466501388)
+    aba.getRange(1, 1, dados.length, dados[0].length).setValues(dados);
+ 
+}
+
+function importarCargaDaONS() {
+ 
+    // URL de download do arquivo CSV
+    var csvUrl = "https://ons-dl-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2022.csv";
+    var csv = UrlFetchApp.fetch(csvUrl).getContentText();
+    var dados = Utilities.parseCsv(csv);
+
+    var planilha = SpreadsheetApp.openById("1-h77HxpQYiGF7O00ikaDGrmpNn0mQhmZ9yDZUnG8_ao")
+    var aba = getSheetById(287932105)
+    aba.getRange(1, 1, dados.length, dados[0].length).setValues(dados);
+ 
+}
+
+function importarPLDDaCCEE() {
+ 
+    // URL de download do arquivo CSV
+    var csvUrl = "https://tableaupub.ccee.org.br/vizql/t/CCEE/w/PreoHorriodoDia/v/Download/vudcsv/sessions/615057FEE12E4F1BB2883D8DB5E7292F-1:0/views/16644390924674464480_12396275659699304630?summary=true";
+    var csv = UrlFetchApp.fetch(csvUrl);
+    var dados = Utilities.parseCsv(csv);
+
+    var planilha = SpreadsheetApp.openById("1-h77HxpQYiGF7O00ikaDGrmpNn0mQhmZ9yDZUnG8_ao")
+    var aba = getSheetById(0)
+    aba.getRange(1, 9, dados.length, dados[0].length).setValues(dados);
+
+    var source = aba.getRange("V3:Y3")
+    var ul = aba.getRange("B1").getLastRow()
+    //var destiny = aba.getRange("B"+ul+":E"+ul).setValue(source);
+    //var destiny = aba.getRange("B"+ul+":E"+ul)
+    //source.copyTo(destiny, {contentsOnly: true});
+    var destRange = aba.getRange(aba.getLastRow()+1,2);
+    source.copyTo (destRange, {contentsOnly: true});
+    var source = aba.getRange("V4")
+    var destRange = aba.getRange(aba.getLastRow(),1);
+    source.copyTo (destRange, {contentsOnly: true});
+  
+ 
+}
