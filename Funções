@@ -68,3 +68,17 @@ function importarPLDDaCCEE() {
   
  
 }
+
+
+function iportarRDH() {
+ 
+    var arquivo = DriveApp.getFilesByName("RDH.csv").next();
+    var csv = Utilities.parseCsv(arquivo.getBlob().getDataAsString(),';');
+    var planilha = SpreadsheetApp.openById("1-h77HxpQYiGF7O00ikaDGrmpNn0mQhmZ9yDZUnG8_ao")
+    var aba = getSheetById(671556465)
+    aba.getRange(1, 1, csv.length, csv[0].length).setValues(csv);
+    //Daqui pra baixo é o código pra substituir os - por nada
+    var A1 = aba.getRange("A1:BX1000")
+    A1.createTextFinder("-").replaceAllWith("");
+
+}
